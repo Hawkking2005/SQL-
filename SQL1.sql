@@ -78,6 +78,74 @@ WHERE department = 'Administration';
 
 -- Delete teachers who teach English
 DELETE FROM teachers
+    
 WHERE subject = 'English';
+ SELECTs: *, specific columns, WHERE/AND/OR/LIKE/BETWEEN, ORDER BY
+
+--  SELECT * (all columns)
+SELECT * FROM students;
+SELECT * FROM employees;
+SELECT * FROM teachers;
+
+--  Specific columns
+SELECT student_id, name, course FROM students;
+SELECT employee_id, name, department FROM employees;
+
+-- Join teachers with employees for teacher names
+SELECT t.teacher_id, e.name AS teacher_name, t.subject
+FROM teachers t
+JOIN employees e ON t.employee_id = e.employee_id;
+
+--  WHERE with equality
+SELECT * FROM students
+WHERE course = 'BSc Computer Science';
+
+--  AND condition
+SELECT * FROM employees
+WHERE department = 'Library' AND designation IS NOT NULL;
+
+--  OR condition
+SELECT * FROM students
+WHERE course = 'BCom' OR course = 'BBA';
+
+--  LIKE pattern
+SELECT * FROM students
+WHERE name LIKE 'A%'; -- names starting with A
+
+SELECT * FROM employees
+WHERE department LIKE '%Office%'; -- contains 'Office'
+
+--  BETWEEN range
+SELECT * FROM students
+WHERE age BETWEEN 18 AND 21;
+
+--  Combining AND/OR with parentheses
+SELECT * FROM employees
+WHERE (department = 'Administration' OR department = 'Library')
+AND designation IS NULL;
+
+--  NULL checks
+SELECT * FROM teachers
+WHERE subject IS NULL;
+
+--  ORDER BY sorting
+SELECT student_id, name, age, course
+FROM students
+ORDER BY age; -- ascending
+
+SELECT employee_id, name, department, designation
+FROM employees
+ORDER BY department DESC; -- descending
+
+SELECT student_id, name, age, course
+FROM students
+ORDER BY course ASC, age DESC; -- multi-column
+
+--  Filter + sort with JOIN
+SELECT e.employee_id, e.name, e.department, t.subject
+FROM teachers t
+JOIN employees e ON t.employee_id = e.employee_id
+WHERE t.subject LIKE '%Math%'
+ORDER BY e.name ASC;
 
 
